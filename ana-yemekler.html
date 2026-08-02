@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ana Yemekler Tarifleri — Sofra Sırları</title>
+  <meta name="description" content="Etli, sebzeli ve zeytinyağlı ana yemek tarifleri. Günlük sofralar ve misafir menüleri için pratik seçenekler.">
+  <meta name="keywords" content="ana yemekler tarifleri, kolay ana yemekler, pratik tarifler">
+  <link rel="canonical" href="https://sofrasirlari.com.tr/kategori/ana-yemekler.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div id="site-header-mount"></div>
+
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="../index.html">Ana Sayfa</a> / Ana Yemekler</div>
+      <h1>🍲 Ana Yemekler Tarifleri</h1>
+      <p>Etli, sebzeli ve zeytinyağlı ana yemek tarifleri. Günlük sofralar ve misafir menüleri için pratik seçenekler.</p>
+    </div>
+  </div>
+
+  <div class="container"><div class="ad-slot ad-leaderboard">REKLAM ALANI<small>Header altı yatay reklam · 970×90</small></div></div>
+
+  <section class="section" style="padding-top:24px;">
+    <div class="container">
+      <div class="toolbar">
+        <input type="text" id="searchInput" placeholder="🔍 Bu kategoride ara...">
+        <select id="fSort">
+          <option value="populer">En Popüler</option>
+          <option value="hizli">En Hızlı</option>
+          <option value="az">A → Z</option>
+        </select>
+      </div>
+      <div class="result-count" id="resultCount"></div>
+      <div class="recipe-grid" id="recipeGrid"></div>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="big">🍽️</div><h3>Sonuç bulunamadı</h3><p>Farklı bir arama deneyin.</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer-mount"></div>
+
+  <script src="../js/recipes-data.js"></script>
+  <script src="../js/site.js"></script>
+  <script>
+    const CAT = "ana-yemekler";
+    function apply() {
+      let list = window.RECIPES.filter(r=>r.category===CAT);
+      const q = document.getElementById("searchInput").value.trim().toLowerCase();
+      const sort = document.getElementById("fSort").value;
+      if (q) list = list.filter(r=>r.name.toLowerCase().includes(q)||r.ingredients.join(" ").toLowerCase().includes(q));
+      if (sort==="populer") list.sort((a,b)=>b.rating-a.rating);
+      else if (sort==="hizli") list.sort((a,b)=>a.totalTime-b.totalTime);
+      else if (sort==="az") list.sort((a,b)=>a.name.localeCompare(b.name,"tr"));
+      const grid=document.getElementById("recipeGrid"), empty=document.getElementById("emptyState");
+      document.getElementById("resultCount").textContent = `${list.length} tarif`;
+      if(!list.length){grid.innerHTML="";empty.style.display="block";return;}
+      empty.style.display="none";
+      LD.renderGridWithAds(grid, list);
+    }
+    function pageInit() {
+      apply();
+      document.getElementById("searchInput").addEventListener("input", apply);
+      document.getElementById("fSort").addEventListener("change", apply);
+    }
+  </script>
+</body>
+</html>
