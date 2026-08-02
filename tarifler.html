@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tüm Tarifler — Sofra Sırları</title>
+  <meta name="description" content="100'den fazla pratik ve denenmiş yemek tarifini kategori, süre ve zorluk seviyesine göre filtreleyerek keşfedin.">
+  <link rel="canonical" href="https://sofrasirlari.com.tr/tarifler.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="site-header-mount"></div>
+
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">Ana Sayfa</a> / Tarifler</div>
+      <h1 id="pageTitle">Tüm Tarifler</h1>
+      <p>Aradığınız tarifi kategori, süre ve zorluk seviyesine göre kolayca bulun.</p>
+    </div>
+  </div>
+
+  <div class="container"><div class="ad-slot ad-leaderboard">REKLAM ALANI<small>Header altı yatay reklam · 970×90</small></div></div>
+
+  <section class="section" style="padding-top:24px;">
+    <div class="container">
+      <!-- 13. Filtreleme sistemi -->
+      <div class="toolbar">
+        <input type="text" id="searchInput" placeholder="🔍 Tarif veya malzeme ara...">
+        <select id="fCat">
+          <option value="">Tüm Kategoriler</option>
+          <option value="ana-yemekler">Ana Yemekler</option>
+          <option value="pilav-makarna">Pilav & Makarna</option>
+          <option value="corbalar">Çorbalar</option>
+          <option value="kahvaltilik">Kahvaltılıklar</option>
+          <option value="hamur-isleri">Hamur İşleri</option>
+          <option value="tatlilar">Tatlılar</option>
+          <option value="salata-meze">Salata & Mezeler</option>
+          <option value="atistirmalik-icecek">Atıştırmalık & İçecekler</option>
+        </select>
+        <select id="fTime">
+          <option value="">Süre (Tümü)</option>
+          <option value="30">30 dk altı</option>
+          <option value="45">45 dk altı</option>
+          <option value="60">60 dk altı</option>
+        </select>
+        <select id="fDiff">
+          <option value="">Zorluk (Tümü)</option>
+          <option value="Kolay">Kolay</option>
+          <option value="Orta">Orta</option>
+          <option value="Zor">Zor</option>
+        </select>
+        <select id="fSort">
+          <option value="populer">En Popüler</option>
+          <option value="yeni">En Yeni</option>
+          <option value="hizli">En Hızlı</option>
+          <option value="az">A → Z</option>
+        </select>
+      </div>
+      <div class="chip-row" id="chipRow" style="margin-bottom:24px;">
+        <button class="chip" data-tag="vejetaryen">🌱 Vejetaryen</button>
+        <button class="chip" data-tag="pratik">⚡ Pratik (35 dk)</button>
+        <button class="chip" data-tag="dusuk-kalori">🥗 Düşük Kalori</button>
+      </div>
+
+      <div class="result-count" id="resultCount"></div>
+      <div class="recipe-grid" id="recipeGrid"></div>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="big">🍽️</div>
+        <h3>Sonuç bulunamadı</h3>
+        <p>Farklı bir arama veya filtre deneyin.</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer-mount"></div>
+
+  <script src="js/recipes-data.js"></script>
+  <script src="js/site.js"></script>
+  <script>
+    let activeTag = null;
+
+    function readParams() {
+      const p = new URLSearchParams(location.search);
+      if (p.get("q")) document.getElementById("searchInput").value = p.get("q");
+      if (p.get("cat")) document.getElementById("fCat").value = p.get("cat");
+      const filter = p.get("filter");
+      if (filter === "populer") document.getElementById("fSort").value = "populer";
+      if (filter === "yeni") document.getElementById("fSort").value = "yeni";
+      if (filter === "pratik") activeTag = "pratik";
+    }
+
+    function apply() {
+      let list = [...window.RECIPES];
+      const q = document.getElementById("searchInput").value.trim().toLowerCase();
+      const cat = document.getElementById("fCat").value;
+      const time = parseInt(document.getElementById("fTime").value) || 0;
+      const diff = document.getElementById("fDiff").value;
+      const sort = document.getElementById("fSort").value;
+
+      if (q) list = list.filter(r =>
+        r.name.toLowerCase().includes(q) ||
+        r.categoryName.toLowerCase().includes(q) ||
+        r.ingredients.join(" ").toLowerCase().includes(q));
+      if (cat) list = list.filter(r => r.category === cat);
+      if (time) list = list.filter(r => r.totalTime <= time);
+      if (diff) list = list.filter(r => r.difficulty === diff);
+
+      if (activeTag === "vejetaryen") list = list.filter(r => r.vegetarian);
+      if (activeTag === "pratik") list = list.filter(r => r.totalTime <= 35);
+      if (activeTag === "dusuk-kalori") list = list.filter(r => r.calories <= 250);
+
+      if (sort === "populer") list.sort((a,b)=>b.rating-a.rating);
+      else if (sort === "yeni") list.sort((a,b)=>b.id-a.id);
+      else if (sort === "hizli") list.sort((a,b)=>a.totalTime-b.totalTime);
+      else if (sort === "az") list.sort((a,b)=>a.name.localeCompare(b.name,"tr"));
+
+      const grid = document.getElementById("recipeGrid");
+      const empty = document.getElementById("emptyState");
+      document.getElementById("resultCount").textContent = `${list.length} tarif bulundu`;
+      if (list.length === 0) { grid.innerHTML=""; empty.style.display="block"; return; }
+      empty.style.display="none";
+      LD.renderGridWithAds(grid, list);
+    }
+
+    function pageInit() {
+      readParams();
+      apply();
+      ["searchInput","fCat","fTime","fDiff","fSort"].forEach(id=>{
+        document.getElementById(id).addEventListener("input", apply);
+        document.getElementById(id).addEventListener("change", apply);
+      });
+      document.querySelectorAll("#chipRow .chip").forEach(chip=>{
+        if (chip.dataset.tag === activeTag) chip.classList.add("active");
+        chip.addEventListener("click", ()=>{
+          const t = chip.dataset.tag;
+          if (activeTag === t) { activeTag=null; chip.classList.remove("active"); }
+          else {
+            activeTag = t;
+            document.querySelectorAll("#chipRow .chip").forEach(c=>c.classList.remove("active"));
+            chip.classList.add("active");
+          }
+          apply();
+        });
+      });
+    }
+  </script>
+</body>
+</html>

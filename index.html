@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sofra Sırları — Pratik ve Denenmiş Yemek Tarifleri</title>
+  <meta name="description" content="Binlerce lezzetli, pratik ve denenmiş yemek, tatlı, çorba ve hamur işi tarifi. Bugün ne pişirsem sorusuna kolay cevaplar Sofra Sırları'nde.">
+  <meta name="keywords" content="yemek tarifleri, kolay yemek tarifleri, pratik tarifler, tatlı tarifleri, çorba tarifleri, bugün ne pişirsem">
+  <link rel="canonical" href="https://sofrasirlari.com.tr/">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Sofra Sırları — Pratik Yemek Tarifleri">
+  <meta property="og:description" content="Denenmiş, pratik ve lezzetli tarifler.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Google AdSense js/site.js üzerinden yönetilir (ADSENSE_CLIENT değişkeni). -->
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    /* Google Analytics 4 yer tutucu (doküman bölüm 28) */
+  </script>
+</head>
+<body>
+  <div id="site-header-mount"></div>
+
+  <!-- 4. Büyük hero alanı + 3. arama -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <h1>Bugün Ne Pişirsem?</h1>
+      <p>Binlerce lezzetli, pratik ve denenmiş yemek tarifini keşfet.</p>
+      <form class="hero-search" data-search-form>
+        <input type="text" placeholder="Yemek, tatlı veya malzeme ara..." aria-label="Tarif ara">
+        <button class="btn" type="submit">Tarifleri Keşfet</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- 13. Header altı yatay reklam -->
+  <div class="container"><div class="ad-slot ad-leaderboard">REKLAM ALANI<small>Header altı yatay reklam · 970×90</small></div></div>
+
+  <!-- 5. Günün tarifi -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div><span class="eyebrow">Günün Tarifi</span><h2>Bugün Mutfakta</h2></div>
+      </div>
+      <div class="featured" id="featured"></div>
+    </div>
+  </section>
+
+  <!-- 8. Kategori kartları -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head">
+        <div><span class="eyebrow">Kategoriler</span><h2>Ne Yapmak İstersin?</h2></div>
+        <a href="tarifler.html" class="link-more">Tüm tarifler →</a>
+      </div>
+      <div class="cat-grid" id="catGrid"></div>
+    </div>
+  </section>
+
+  <!-- 6. Popüler tarifler -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head">
+        <div><span class="eyebrow">En Çok Sevilenler</span><h2>Popüler Tarifler</h2></div>
+        <a href="tarifler.html?filter=populer" class="link-more">Hepsini gör →</a>
+      </div>
+      <div class="recipe-grid" id="popular"></div>
+    </div>
+  </section>
+
+  <!-- 7. En yeni tarifler -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head">
+        <div><span class="eyebrow">Taze Eklenenler</span><h2>En Yeni Tarifler</h2></div>
+        <a href="tarifler.html?filter=yeni" class="link-more">Hepsini gör →</a>
+      </div>
+      <div class="recipe-grid" id="newest"></div>
+    </div>
+  </section>
+
+  <!-- Liste içi reklam -->
+  <div class="container"><div class="ad-slot ad-inline">REKLAM ALANI<small>İçerik arası reklam · 728×90</small></div></div>
+
+  <!-- 9. Pratik tarifler -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head">
+        <div><span class="eyebrow">Az Malzeme, Az Zaman</span><h2>Pratik Tarifler</h2></div>
+        <a href="tarifler.html?filter=pratik" class="link-more">Hepsini gör →</a>
+      </div>
+      <div class="recipe-grid" id="pratik"></div>
+    </div>
+  </section>
+
+  <!-- 10. Tatlı tarifleri -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head">
+        <div><span class="eyebrow">Tatlı Kaçamağı</span><h2>Tatlı Tarifleri</h2></div>
+        <a href="kategori/tatlilar.html" class="link-more">Tüm tatlılar →</a>
+      </div>
+      <div class="recipe-grid" id="tatli"></div>
+    </div>
+  </section>
+
+  <!-- 11. Editörün seçtikleri -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head">
+        <div><span class="eyebrow">Editörün Seçimi</span><h2>Denemeye Değer</h2></div>
+      </div>
+      <div class="recipe-grid" id="editor"></div>
+    </div>
+  </section>
+
+  <!-- 12. E-posta aboneliği / Newsletter -->
+  <section class="section">
+    <div class="container">
+      <div class="newsletter">
+        <h2>Haftanın En Lezzetli Tarifleri E-postana Gelsin</h2>
+        <p>Her hafta pratik yemekler, tatlı tarifleri ve özel menü önerileri gönderiyoruz.</p>
+        <form data-demo-form="Bültene başarıyla abone oldunuz! 🎉">
+          <input type="email" placeholder="E-posta adresiniz" required aria-label="E-posta">
+          <button class="btn" type="submit">Abone Ol</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer-mount"></div>
+
+  <script src="js/recipes-data.js"></script>
+  <script src="js/site.js"></script>
+  <script>
+    function pageInit() {
+      const R = window.RECIPES;
+      const byRating = [...R].sort((a,b)=>b.rating-a.rating);
+      const byNewest = [...R].sort((a,b)=>b.id-a.id);
+
+      // Günün tarifi — tarihe göre sabit seçim
+      const dayIdx = new Date().getDate() % R.length;
+      const daily = R[dayIdx];
+      document.getElementById("featured").innerHTML = `
+        <div class="img"></div>
+        <div class="content">
+          <span class="eyebrow">${daily.categoryName}</span>
+          <h2>${daily.name}</h2>
+          <p>${daily.intro}</p>
+          <div class="fmeta">
+            <div><strong>${daily.totalTime} dk</strong>Toplam Süre</div>
+            <div><strong>${daily.servings}</strong>Porsiyon</div>
+            <div><strong>${daily.difficulty}</strong>Zorluk</div>
+            <div><strong>★ ${daily.rating.toFixed(1)}</strong>Puan</div>
+          </div>
+          <a href="tarifler/${daily.slug}.html" class="btn">Tarifi Gör</a>
+        </div>`;
+
+      // Kategori kartları
+      const counts = {};
+      R.forEach(r=>counts[r.category]=(counts[r.category]||0)+1);
+      document.getElementById("catGrid").innerHTML = LD.CAT_LIST.concat([["atistirmalik-icecek","Atıştırmalık"],["pilav-makarna","Pilav & Makarna"]]).map(([slug,name])=>{
+        const emoji = (window.CATEGORIES[slug]||{}).emoji || "🍽️";
+        return `<a href="kategori/${slug}.html" class="cat-card"><div class="emoji">${emoji}</div><h3>${name}</h3><span>${counts[slug]||0} tarif</span></a>`;
+      }).join("");
+
+      const grid = (id, list) => { const el=document.getElementById(id); if(el) el.innerHTML = list.map(LD.recipeCard).join(""); };
+      grid("popular", byRating.slice(0,4));
+      grid("newest", byNewest.slice(0,4));
+      grid("pratik", R.filter(r=>r.totalTime<=35).slice(0,4));
+      grid("tatli", R.filter(r=>r.category==="tatlilar").slice(0,4));
+      grid("editor", [byRating[2],byRating[5],byRating[8],byRating[11]]);
+    }
+  </script>
+</body>
+</html>

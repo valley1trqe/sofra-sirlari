@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favorilerim — Sofra Sırları</title>
+  <meta name="description" content="Beğenip favorilerinize eklediğiniz tarifler burada.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="site-header-mount"></div>
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">Ana Sayfa</a> / Favorilerim</div>
+      <h1>❤️ Favorilerim</h1>
+      <p>Beğendiğiniz tarifleri buradan hızlıca bulabilirsiniz.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div class="result-count" id="resultCount"></div>
+      <div class="recipe-grid" id="recipeGrid"></div>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="big">🤍</div>
+        <h3>Henüz favori tarifiniz yok</h3>
+        <p>Tariflerdeki kalp simgesine dokunarak favorilerinize ekleyebilirsiniz.</p>
+        <a href="tarifler.html" class="btn" style="margin-top:16px;">Tarifleri Keşfet</a>
+      </div>
+    </div>
+  </section>
+  <div id="site-footer-mount"></div>
+  <script src="js/recipes-data.js"></script>
+  <script src="js/site.js"></script>
+  <script>
+    function pageInit() {
+      const favs = LD.getFavs();
+      const list = window.RECIPES.filter(r=>favs.includes(r.slug));
+      const grid=document.getElementById("recipeGrid"), empty=document.getElementById("emptyState");
+      document.getElementById("resultCount").textContent = list.length ? `${list.length} favori tarif` : "";
+      if(!list.length){empty.style.display="block";return;}
+      grid.innerHTML = list.map(LD.recipeCard).join("");
+      // favoriden çıkarınca listeyi güncelle
+      grid.addEventListener("click",(e)=>{
+        if(e.target.closest("[data-fav]")) setTimeout(pageInit,50);
+      });
+    }
+  </script>
+</body>
+</html>
