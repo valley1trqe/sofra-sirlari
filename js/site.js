@@ -24,6 +24,15 @@
   };
 
 (function () {
+  // Vercel Web Analytics (düz HTML/statik site yöntemi)
+  (function loadVercelAnalytics() {
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    var s = document.createElement("script");
+    s.defer = true;
+    s.src = "/_vercel/insights/script.js";
+    document.head.appendChild(s);
+  })();
+
   // Bir reklam kutusuna Adsterra banner'ı yerleştirir (iframe izolasyonuyla)
   function placeAdsterra(slot, size) {
     var key = (window.ADSTERRA_KEYS || {})[size];
