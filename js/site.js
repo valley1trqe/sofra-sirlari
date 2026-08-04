@@ -212,6 +212,7 @@
     return `
     <article class="recipe-card" data-slug="${r.slug}">
       <a href="${ROOT}tarifler/${r.slug}.html" class="thumb" data-emoji="${emoji}">
+        <img src="${ROOT}images/${r.slug}.webp" alt="${r.name}" loading="lazy" onerror="this.remove()">
         <span class="cat-tag">${r.categoryName}</span>
       </a>
       <button class="fav-btn ${favActive}" data-fav="${r.slug}" data-name="${r.name}" aria-label="Favorilere ekle">❤</button>
